@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://dud7jbknqj7aj"]
+[gd_scene load_steps=10 format=4 uid="uid://dud7jbknqj7aj"]
 
 [ext_resource type="PackedScene" uid="uid://bvow83xsvpoto" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://bcxrrtbythfjy" path="res://assets/PlaceholderAssets/environment/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://cnktsfx7qhna6" path="res://scripts/mana_bar.gd" id="3_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://dqqlwa6rolcus" path="res://assets/PlaceholderAssets/ui/Health_03.png" id="4_iywne"]
+[ext_resource type="Texture2D" uid="uid://b8fesqj362gu3" path="res://assets/PlaceholderAssets/ui/Health_03_Bar03.png" id="5_p57ef"]
+[ext_resource type="Script" uid="uid://d4007x8gyxra" path="res://scripts/texture_mana_bar.gd" id="6_p57ef"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -157,11 +160,34 @@ position = Vector2(0, 3)
 position = Vector2(8, 11)
 zoom = Vector2(6, 6)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -88.0
+offset_top = -43.0
+offset_right = 104.0
+offset_bottom = 65.0
 
-[node name="ManaBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+[node name="ManaBar" type="ProgressBar" parent="Control" node_paths=PackedStringArray("player")]
+visible = false
+layout_mode = 0
 offset_right = 50.0
 offset_bottom = 27.0
 value = 100.0
 script = ExtResource("3_lnu2h")
+player = NodePath("../../Player")
+
+[node name="TextureManaBar" type="TextureProgressBar" parent="Control" node_paths=PackedStringArray("player")]
+offset_left = 105.0
+offset_top = 85.0
+offset_right = 184.0
+offset_bottom = 108.0
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
+texture_under = ExtResource("4_iywne")
+texture_progress = ExtResource("5_p57ef")
+script = ExtResource("6_p57ef")
 player = NodePath("../../Player")
