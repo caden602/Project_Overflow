@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://dud7jbknqj7aj"]
+[gd_scene load_steps=7 format=4 uid="uid://dud7jbknqj7aj"]
 
 [ext_resource type="PackedScene" uid="uid://bvow83xsvpoto" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://bcxrrtbythfjy" path="res://assets/PlaceholderAssets/environment/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="2_yqjtg"]
+[ext_resource type="Script" uid="uid://cnktsfx7qhna6" path="res://scripts/mana_bar.gd" id="3_lnu2h"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -155,3 +156,12 @@ position = Vector2(0, 3)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(8, 11)
 zoom = Vector2(6, 6)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ManaBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+offset_right = 50.0
+offset_bottom = 27.0
+value = 100.0
+script = ExtResource("3_lnu2h")
+player = NodePath("../../Player")
