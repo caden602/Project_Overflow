@@ -5,7 +5,7 @@ class_name Player
 signal manaChanged
 
 @export var maxMana = 100.0
-@export var currentMana: int = maxMana
+@export var currentMana = 0.0
 @export var gameTime : GameTime
 
 const SPEED = 130.0
@@ -35,8 +35,17 @@ func _input(event: InputEvent) -> void:
 		useMana()
 
 func useMana():
-	currentMana = currentMana - 10
-	manaChanged.emit()
+	if currentMana == 100:
+		currentMana -= 20
+		manaChanged.emit()
+	if currentMana <= 90:
+		currentMana -= 10
+		manaChanged.emit()
 	
 func increaseMana():
-	currentMana = min(currentMana + 10, 100)
+	if currentMana <= 100:
+		currentMana = min(currentMana + 10, 100)
+		manaChanged.emit()
+		print(currentMana)
+	else:
+		pass

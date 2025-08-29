@@ -116,8 +116,9 @@ texture = ExtResource("2_yqjtg")
 [sub_resource type="TileSet" id="TileSet_lbhrr"]
 sources/1 = SubResource("TileSetAtlasSource_lnu2h")
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("player")]
 script = ExtResource("7_u5sy4")
+player = NodePath("Player")
 
 [node name="GameTime" type="Timer" parent="."]
 process_callback = 0
@@ -180,7 +181,6 @@ visible = false
 layout_mode = 0
 offset_right = 50.0
 offset_bottom = 27.0
-value = 100.0
 script = ExtResource("3_lnu2h")
 player = NodePath("../../Player")
 gameTime = NodePath("../..")

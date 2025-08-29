@@ -7,4 +7,4 @@ func _ready():
 	update()
 
 func update():
-	value = player.currentMana * 100 / player.maxMana
+	value = player.currentMana
