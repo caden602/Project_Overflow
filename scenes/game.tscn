@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://dud7jbknqj7aj"]
+[gd_scene load_steps=11 format=4 uid="uid://dud7jbknqj7aj"]
 
 [ext_resource type="PackedScene" uid="uid://bvow83xsvpoto" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://bcxrrtbythfjy" path="res://assets/PlaceholderAssets/environment/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="2_yqjtg"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dqqlwa6rolcus" path="res://assets/PlaceholderAssets/ui/Health_03.png" id="4_iywne"]
 [ext_resource type="Texture2D" uid="uid://b8fesqj362gu3" path="res://assets/PlaceholderAssets/ui/Health_03_Bar03.png" id="5_p57ef"]
 [ext_resource type="Script" uid="uid://d4007x8gyxra" path="res://scripts/texture_mana_bar.gd" id="6_p57ef"]
+[ext_resource type="Script" uid="uid://w7nw01p2ttxw" path="res://scripts/game_time.gd" id="7_u5sy4"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -116,6 +117,11 @@ texture = ExtResource("2_yqjtg")
 sources/1 = SubResource("TileSetAtlasSource_lnu2h")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("7_u5sy4")
+
+[node name="GameTime" type="Timer" parent="."]
+process_callback = 0
+autostart = true
 
 [node name="Walls" type="Node2D" parent="."]
 position = Vector2(1, -33)
@@ -153,14 +159,15 @@ tile_map_data = PackedByteArray("AAD6//3/AQAAAAAAAAD7//3/AQACAAAAAAD8//3/AQADAAA
 tile_set = SubResource("TileSet_lbhrr")
 y_sort_origin = -1
 
-[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+[node name="Player" parent="." node_paths=PackedStringArray("gameTime") instance=ExtResource("1_uwrxv")]
 position = Vector2(0, 3)
+gameTime = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(8, 11)
 zoom = Vector2(6, 6)
 
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -88.0
@@ -168,7 +175,7 @@ offset_top = -43.0
 offset_right = 104.0
 offset_bottom = 65.0
 
-[node name="ManaBar" type="ProgressBar" parent="Control" node_paths=PackedStringArray("player")]
+[node name="ManaBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("player", "gameTime")]
 visible = false
 layout_mode = 0
 offset_right = 50.0
@@ -176,8 +183,10 @@ offset_bottom = 27.0
 value = 100.0
 script = ExtResource("3_lnu2h")
 player = NodePath("../../Player")
+gameTime = NodePath("../..")
 
-[node name="TextureManaBar" type="TextureProgressBar" parent="Control" node_paths=PackedStringArray("player")]
+[node name="TextureManaBar" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
+layout_mode = 0
 offset_left = 105.0
 offset_top = 85.0
 offset_right = 184.0
@@ -191,3 +200,5 @@ texture_under = ExtResource("4_iywne")
 texture_progress = ExtResource("5_p57ef")
 script = ExtResource("6_p57ef")
 player = NodePath("../../Player")
+
+[connection signal="timeout" from="GameTime" to="." method="_on_game_time_timeout"]

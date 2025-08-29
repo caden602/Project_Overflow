@@ -1,6 +1,7 @@
 extends ProgressBar
 
 @export var player : Player
+@export var gameTime : GameTime
 
 func _ready():
 	player.manaChanged.connect(update)

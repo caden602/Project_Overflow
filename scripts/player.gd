@@ -4,10 +4,14 @@ class_name Player
 
 signal manaChanged
 
-@export var maxMana = 80.0
+@export var maxMana = 100.0
 @export var currentMana: int = maxMana
+@export var gameTime : GameTime
 
 const SPEED = 130.0
+
+func _ready() -> void:
+	gameTime.secondPassed.connect(increaseMana)
 
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
@@ -33,3 +37,6 @@ func _input(event: InputEvent) -> void:
 func useMana():
 	currentMana = currentMana - 10
 	manaChanged.emit()
+	
+func increaseMana():
+	currentMana = min(currentMana + 10, 100)
