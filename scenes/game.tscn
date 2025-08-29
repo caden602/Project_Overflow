@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dud7jbknqj7aj"]
+[gd_scene load_steps=13 format=4 uid="uid://dud7jbknqj7aj"]
 
 [ext_resource type="PackedScene" uid="uid://bvow83xsvpoto" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://bcxrrtbythfjy" path="res://assets/PlaceholderAssets/environment/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="2_yqjtg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b8fesqj362gu3" path="res://assets/PlaceholderAssets/ui/Health_03_Bar03.png" id="5_p57ef"]
 [ext_resource type="Script" uid="uid://d4007x8gyxra" path="res://scripts/texture_mana_bar.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://w7nw01p2ttxw" path="res://scripts/game_time.gd" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://c1ojgte7uelya" path="res://scenes/fireball.tscn" id="8_gee14"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 
@@ -116,6 +117,9 @@ texture = ExtResource("2_yqjtg")
 [sub_resource type="TileSet" id="TileSet_lbhrr"]
 sources/1 = SubResource("TileSetAtlasSource_lnu2h")
 
+[sub_resource type="Environment" id="Environment_gee14"]
+glow_enabled = true
+
 [node name="Game" type="Node2D" node_paths=PackedStringArray("player")]
 script = ExtResource("7_u5sy4")
 player = NodePath("Player")
@@ -200,5 +204,10 @@ texture_under = ExtResource("4_iywne")
 texture_progress = ExtResource("5_p57ef")
 script = ExtResource("6_p57ef")
 player = NodePath("../../Player")
+
+[node name="Fireball" parent="." instance=ExtResource("8_gee14")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gee14")
 
 [connection signal="timeout" from="GameTime" to="." method="_on_game_time_timeout"]

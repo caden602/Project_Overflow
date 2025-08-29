@@ -1,0 +1,193 @@
+[gd_scene load_steps=17 format=3 uid="uid://c1ojgte7uelya"]
+
+[ext_resource type="Script" uid="uid://b6tapk7gi05x0" path="res://scripts/fireball.gd" id="1_1gl40"]
+[ext_resource type="Texture2D" uid="uid://baa2wwck4f5xv" path="res://assets/PlaceholderAssets/spells/fireball/All_Fire_Bullet_Pixel_16x16 (1).png" id="1_3s14c"]
+[ext_resource type="Texture2D" uid="uid://d0fi3gbqjdab8" path="res://icon.svg" id="3_7kba2"]
+[ext_resource type="Script" uid="uid://cgiwnpfr7yy73" path="res://scripts/line_2d.gd" id="3_cb14k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gl40"]
+atlas = ExtResource("1_3s14c")
+region = Rect2(96, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb14k"]
+atlas = ExtResource("1_3s14c")
+region = Rect2(112, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kba2"]
+atlas = ExtResource("1_3s14c")
+region = Rect2(128, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43lgj"]
+atlas = ExtResource("1_3s14c")
+region = Rect2(144, 240, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vqoxj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gl40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb14k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kba2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43lgj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cb14k"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_cb14k"]
+_data = [Vector2(0.010582, 0.0114068), 0.0, 0.0, 0, 0, Vector2(1, 0.870853), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_cb14k"]
+offsets = PackedFloat32Array(0, 0.0994083, 0.338462, 0.569231, 0.763333, 0.891124)
+colors = PackedColorArray(1, 1, 1, 0, 0.87451, 0.239216, 0.141176, 1, 0.980392, 0.415686, 0.0392157, 1, 1, 0.835294, 0.258824, 1, 1, 0.941176, 0.305882, 1, 0.992157, 0.937255, 0.305882, 1)
+
+[sub_resource type="Animation" id="Animation_43lgj"]
+resource_name = "rotate_fireball"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_vqoxj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/TrailPosition:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/TrailPosition2:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_7kba2"]
+resource_name = "rotate_lines"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/TrailPosition:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/TrailPosition2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_86oub"]
+_data = {
+&"RESET": SubResource("Animation_vqoxj"),
+&"rotate_fireball": SubResource("Animation_43lgj"),
+&"rotate_lines": SubResource("Animation_7kba2")
+}
+
+[node name="Fireball" type="Node2D"]
+script = ExtResource("1_1gl40")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vqoxj")
+autoplay = "default"
+frame = 3
+frame_progress = 0.256136
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(0.0625, 0.0546875)
+texture = ExtResource("3_7kba2")
+
+[node name="TrailPosition" type="Node2D" parent="Sprite2D"]
+position = Vector2(0, -2.17983e-06)
+scale = Vector2(16, 18.2857)
+
+[node name="Trail" type="Line2D" parent="Sprite2D/TrailPosition"]
+modulate = Color(1.5, 1.5, 1.5, 1)
+material = SubResource("CanvasItemMaterial_cb14k")
+position = Vector2(0, -1)
+points = PackedVector2Array(-22, 1, -15, -1, -8, -2, -1, -1)
+width = 3.0
+width_curve = SubResource("Curve_cb14k")
+gradient = SubResource("Gradient_cb14k")
+script = ExtResource("3_cb14k")
+
+[node name="TrailPosition2" type="Node2D" parent="Sprite2D"]
+position = Vector2(0, -2.17983e-06)
+scale = Vector2(16, 18.2857)
+
+[node name="Trail" type="Line2D" parent="Sprite2D/TrailPosition2"]
+modulate = Color(1.5, 1.5, 1.5, 1)
+material = SubResource("CanvasItemMaterial_cb14k")
+position = Vector2(0, 2)
+points = PackedVector2Array(-21, 3, -14, 4, -8, 4, -1, 1)
+width = 3.0
+width_curve = SubResource("Curve_cb14k")
+gradient = SubResource("Gradient_cb14k")
+script = ExtResource("3_cb14k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_86oub")
+}
+autoplay = "rotate_fireball"
